@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Aug  1 13:11:53 2019
-
-@author: Chuck
-"""
-
 import cv2, math
 import matplotlib.pyplot as plt
 from scipy import signal
