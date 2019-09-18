@@ -2,7 +2,7 @@
 """
 Created on Thu Aug  1 13:11:53 2019
 
-@author: Jack
+@author: Chuck
 """
 
 import cv2, math
