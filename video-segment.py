@@ -1,12 +1,11 @@
-import cv2, math
-import matplotlib.pyplot as plt
+import cv2
 from scipy import signal
 import numpy as np
 import subprocess
+import argparse
 
 """
-NB: hist(), read_frames(), and get_frame_difference() are borrowed or adapted from https://github.com/borstell/SSLD-images
-NB: script requires installation of ffmpeg, but same can be done using opencv
+NB: script requires installation of ffmpeg, but can be modified to use opencv
 """
 
 def hist(img):
@@ -71,18 +70,20 @@ def video_cut(video,spaced_peaks,window=4):
         subprocess.call(['ffmpeg', '-y', '-ss', str(y-window/2), '-i', video, '-c', 'copy', '-t', str(window), outName+str(i)+'.mp4'])
         print("video cut")
 
-"""
-Use of functions
-"""
+def main():
+	parser = argparse.ArgumentParser(description='Video segmenter')
+	parser.add_argument('fileName',type=str,help='Name of the file you want to segment, including extension')
+	args = parser.parse_args()
+	if len(args.fileName.split(".")[1]) < 2:
+		print("Please include extension")
+	else:
+		hist_dif,fps = get_frame_difference(fileName)
+		sig_peaks = get_vid_stats(hist_dif)
+		spaced_peaks = peak_spacing(sig_peaks,fps)
+		video_cut(fileName,spaced_peaks)
 
-
-video = "np2.mp4" #provided video
-hist_dif,fps = get_frame_difference(video) 
-sig_peaks = get_vid_stats(hist_dif)
-spaced_peaks = peak_spacing(sig_peaks,fps)
-video_cut(video,spaced_peaks)
-
-
+if __name__ == "__main__":
+    main()
 
 
 
