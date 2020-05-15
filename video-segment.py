@@ -73,14 +73,17 @@ def video_cut(video,spaced_peaks,window=4):
 def main():
 	parser = argparse.ArgumentParser(description='Video segmenter')
 	parser.add_argument('fileName',type=str,help='Name of the file you want to segment, including extension')
+	parser.add_argument('--window',dest='window',type=int,help='How far before and after the peak to clip the video.')
+	parser.add_argument('--spacing',dest='spacing',type=int,help='How far peaks must be from each other')
+
 	args = parser.parse_args()
 	if len(args.fileName.split(".")[1]) < 2:
 		print("Please include extension")
 	else:
 		hist_dif,fps = get_frame_difference(fileName)
 		sig_peaks = get_vid_stats(hist_dif)
-		spaced_peaks = peak_spacing(sig_peaks,fps)
-		video_cut(fileName,spaced_peaks)
+		spaced_peaks = peak_spacing(sig_peaks,fps,spacing=args.spacing)
+		video_cut(fileName,spaced_peaks,window=args.window)
 
 if __name__ == "__main__":
     main()
