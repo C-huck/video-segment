@@ -8,7 +8,7 @@ Script identifies gross pixel-wide changes between frames. Changes that are two 
 Run the script from the command line with
 
 ```Python
-./video-segment.py filename [--window-size N] [--specaing N]
+./video-segment.py filename [--window-size N] [--spacing N]
 ```
 
 `window-size`/2 indicates how many seconds before and after the peak to clip the video.
